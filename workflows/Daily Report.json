@@ -1,0 +1,105 @@
+{
+  "name": "Daily Report",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -368,
+        0
+      ],
+      "id": "1e97bcd6-f11d-4e49-b3e2-cc9d78349536",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "url": "http://host.docker.internal:5000/report",
+        "options": {
+          "response": {
+            "response": {
+              "responseFormat": "file"
+            }
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -144,
+        0
+      ],
+      "id": "45fc96ad-6413-461f-88ac-c0e308d8c15a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "sendPhoto",
+        "chatId": "Your CHatID",
+        "binaryData": true,
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        80,
+        0
+      ],
+      "id": "eca09604-8dd9-478f-ad90-904a5cb54e89",
+      "name": "Send a photo message",
+      "webhookId": "e8ffb88b-7a03-428c-9036-f3aeb2d396ba",
+      "credentials": {
+        "telegramApi": {
+          "id": "NOHReBaegT93BOsz",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Send a photo message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "083904c5-e9fc-44b5-92dc-811d629f4855",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5384edeff711bcc96f73b680458f473fd795f7dd9cba3e37ee9bd422b3e62f3a"
+  },
+  "nodeGroups": [],
+  "id": "hqdI49lWW9qbrH1h",
+  "tags": []
+}

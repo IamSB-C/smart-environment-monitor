@@ -1,0 +1,158 @@
+{
+  "name": "Smartenv",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "sensor",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -384,
+        -32
+      ],
+      "id": "3b4f2071-8ff0-4931-92ec-67637d07a2c9",
+      "name": "Webhook",
+      "webhookId": "f27ed718-b12d-4bed-a932-584ab3f4f087"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:5000/analyze",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "temperature",
+              "value": "={{ $json.body.temperature }}"
+            },
+            {
+              "name": "humidity",
+              "value": "={{ $json.body.humidity }}"
+            },
+            {
+              "name": "gas",
+              "value": "={{ $json.body.gas }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        -160,
+        -32
+      ],
+      "id": "c4b35517-d7b6-4956-98e8-340e1376067a",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "173f1838-8adc-4701-81cd-8e1da99b9c18",
+              "leftValue": "={{ $json.anomaly }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        64,
+        -32
+      ],
+      "id": "90147c58-f719-4772-9472-a9c56cf2091c",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "chatId": "Your Chat ID",
+        "text": "={{ $json.message }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        288,
+        -128
+      ],
+      "id": "01ce7e22-33a6-405d-998a-9d41adf7b81d",
+      "name": "Send a text message",
+      "webhookId": "82df7a5d-21e8-4bbd-b8b5-5b572a1c8c28",
+      "credentials": {
+        "telegramApi": {
+          "id": "NOHReBaegT93BOsz",
+          "name": "Telegram account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "bbc71096-2edb-4ca9-bb32-575be4b8ab24",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5384edeff711bcc96f73b680458f473fd795f7dd9cba3e37ee9bd422b3e62f3a"
+  },
+  "nodeGroups": [],
+  "id": "RxvvikwFSZPV1ljo",
+  "tags": []
+}
