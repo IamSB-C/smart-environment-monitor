@@ -1,0 +1,17 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Data log generated at runtime
+readings_log.csv
+
+# Secrets (never commit tokens)
+.env
+*.env
+
+# Editor / OS
+.vscode/
+.DS_Store
+Thumbs.db
