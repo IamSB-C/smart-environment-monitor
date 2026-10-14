@@ -115,9 +115,15 @@ curl -X POST http://localhost:5000/analyze \
 
 ## Screenshots
 
-| n8n workflow | Telegram alerts | Daily report |
-|---|---|---|
-| ![workflow](screenshots/workflow.png) | ![alerts](screenshots/alerts.png) | ![report](screenshots/report.png) |
+## Screenshots
+
+| n8n alert workflow | n8n daily report workflow |
+|---|---|
+| ![workflow1](screenshots/workflow1.png) | ![workflow2](screenshots/workflow2.png) |
+
+| Telegram alerts | Daily report chart |
+|---|---|
+| ![alert](screenshots/alert.jpeg) | ![chart](screenshots/chart.jpeg) |
 
 ## Configuration
 
